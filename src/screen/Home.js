@@ -1,16 +1,29 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
-import {Header, Container} from 'native-base';
+import {Header, Container, Input} from 'native-base';
+import Logout from 'react-native-vector-icons/MaterialCommunityIcons';
+import Caret from 'react-native-vector-icons/AntDesign'
 
 export default class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state= {
+      caretStatus: false,
+    }
+    this.sort = () => {
+      this.setState({caretStatus: !this.state.caretStatus})
+    }
+  }
   render() {
+    console.log(this.state)
     return (
       <>
         <Container>
-          <Header style={{backgroundColor: '#633a82', alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 20, color: 'white'}}>
-              Find your adventure !
-            </Text>
+          <Header style={{backgroundColor: '#633a82', alignItems: 'center', justifyContent:'space-between'}}>
+            <Text style={{color:'white', fontWeight:'bold', fontSize:25, marginLeft:20}}>Find your adventure !</Text>
+            <TouchableOpacity style={{alignItems:'center', backgroundColor:'#be79df', borderRadius:20}} onPress={()=>this.props.navigation.navigate('Login')}>
+              <Logout name='logout-variant' size={30} color='white' style={{margin:10}}/>
+            </TouchableOpacity>
           </Header>
           <ScrollView>
             <TouchableOpacity
@@ -59,6 +72,19 @@ export default class Home extends Component {
               </View>
             </TouchableOpacity>
           </ScrollView>
+          <View
+            style={{
+              backgroundColor: '#633a82',
+              flex: 0.3,
+            }}>
+              <View style={{width:'80%', flexDirection:'row', alignItems:'center'}}>
+              <Input  type='text' placeholder='Find your Destination' style={{backgroundColor:'white', borderRadius:20, marginTop:10, height:40, marginBottom:10, alignItems:'center'}}/>
+              <TouchableOpacity style={{marginLeft:5}} onPress={this.sort}>
+              <Text style={{color:'white', fontWeight:'bold'}}>Sort By Price</Text>
+              <Caret name={this.state.caretStatus ? 'caretdown' : 'caretup'} size={20} color='white' style={{marginLeft:30}}/>
+              </TouchableOpacity>
+            </View>
+          </View>
         </Container>
       </>
     );

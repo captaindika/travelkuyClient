@@ -10,10 +10,10 @@ import {
   Body,
   ListItem,
   Text,
+  Input
 } from 'native-base';
 import {View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import Logo from 'react-native-vector-icons/MaterialIcons';
-import { Input } from 'react-native-elements';
 
 export default class Login extends Component {
   constructor(props) {
@@ -44,7 +44,7 @@ export default class Login extends Component {
               Login
             </Text>
           </Header>
-          <ScrollView style={{backgroundColor: 'white', flex: 1}}>
+          <ScrollView style={{backgroundColor: 'white', flex: 1, marginBottom:10}}>
             <Form style={{marginTop: 10}}>
               <Item stackedLabel>
                 <Label>Username</Label>
