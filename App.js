@@ -18,7 +18,9 @@ import {
 
 import SplashScreen from 'react-native-splash-screen';
 import 'react-native-gesture-handler';
-
+import { Provider } from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from './src/redux/store';
 //screen
 import StackScreen from './src/component/Stack';
 
@@ -29,7 +31,13 @@ class App extends React.Component {
     SplashScreen.hide();
   }
   render() {
-    return <StackScreen />;
+    return (
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <StackScreen />
+        </PersistGate>
+      </Provider>
+      )
   }
 }
 

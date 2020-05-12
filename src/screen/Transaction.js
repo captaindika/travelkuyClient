@@ -1,9 +1,21 @@
 import React, {Component} from 'react';
-import {ScrollView, View, TouchableOpacity} from 'react-native';
-import {Header, Container, Text} from 'native-base';
+import {ScrollView, View, Text, TouchableOpacity, TextInput} from 'react-native';
+import {Header, Container, Input} from 'native-base';
+import Caret from 'react-native-vector-icons/AntDesign';
 
 export default class Transaction extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      caretStatus: false,
+      text: 'teks',
+    };
+    this.sort = () => {
+      this.setState({caretStatus: !this.state.caretStatus});
+    };
+  }
   render() {
+    console.log(this.state)
     return (
       <>
         <Container>
@@ -59,6 +71,41 @@ export default class Transaction extends Component {
               </View>
             </TouchableOpacity>
           </ScrollView>
+          <View
+            style={{
+              backgroundColor: '#633a82',
+              flex: 0.15,
+            }}>
+            <View style={{flexDirection: 'row', alignItems:'center', flex:1}}>
+              <Input
+                type="text"
+                placeholder="Find your Destination"
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: 20,
+                  marginLeft:5,
+                  marginTop: 10,
+                  height: 40,
+                  marginBottom: 10,
+                  alignItems: 'center',
+                  flex: 1,
+                }}
+              />
+              <TouchableOpacity
+                style={{marginLeft: 10, flex: 0.3}}
+                onPress={this.sort}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>
+                  Sort By Date
+                </Text>
+                <Caret
+                  name={this.state.caretStatus ? 'caretdown' : 'caretup'}
+                  size={20}
+                  color="white"
+                  style={{marginLeft: 30}}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
         </Container>
       </>
     );

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import isLogin from './Auth'
 import TopUp from './User/Transaction'
-import GetSchedules from './User/Schedule'
+import Schedules from './User/Schedule'
 
 const allReducers = combineReducers({
-  isLogin, TopUp, GetSchedules
+  isLogin, TopUp, Schedules
 })
 
 export default allReducers

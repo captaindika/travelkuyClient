@@ -1,16 +1,23 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, ScrollView, TextInput} from 'react-native';
 import {Container, Thumbnail, Text} from 'native-base';
 import Logo from 'react-native-vector-icons/MaterialIcons';
-import logout from 'react-native-vector-icons/MaterialCommunityIcons'
+
 
 export default class Profile extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+
+    }
+  }
   render() {
     const uri =
       'https://facebook.github.io/react-native/docs/assets/favicon.png';
     return (
       <>
-        <Container>
+        <ScrollView>
+          <Container>
           <View
             style={{
               flex: 0.6,
@@ -107,7 +114,7 @@ export default class Profile extends Component {
                 
               }}>
               <Text style={{marginLeft:10, color:'white', fontSize:15, fontWeight:'bold'}}>Balance :</Text>
-              <Text style={{marginRight:10, color:'white', fontSize:15, fontWeight:'bold'}}>Rp.10.000</Text>
+              <TextInput defaultValue={'Rp.100.000'} style={{marginRight:10, color:'white', fontSize:15, fontWeight:'bold', backgroundColor:'transparent'}}/>
             </View>
           </View>
           <View
@@ -122,7 +129,8 @@ export default class Profile extends Component {
               Trust your journey to us
             </Text>
           </View>
-        </Container>
+          </Container>
+        </ScrollView>
       </>
     );
   }

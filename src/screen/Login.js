@@ -14,6 +14,8 @@ import {
 } from 'native-base';
 import {View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import Logo from 'react-native-vector-icons/MaterialIcons';
+import {setLogin} from '../redux/action/Auth';
+import {connect} from 'react-redux';
 
 export default class Login extends Component {
   constructor(props) {
@@ -21,7 +23,9 @@ export default class Login extends Component {
     this.state = {
       checkBox: false,
       showPass: true,
-      errorInput: null
+      errorInput: null,
+      username: '',
+      password: ''
     };
 
     this.showPassword = () =>

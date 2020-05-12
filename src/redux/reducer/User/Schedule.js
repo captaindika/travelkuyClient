@@ -4,13 +4,13 @@ const initialState = {
   data: {},
 };
 
-export default function GetSchedules(state = initialState, {type, payload}) {
+export default function Schedules(state = initialState, {type, payload}) {
   switch (type) {
     case 'SET_SCHEDULE':
       return {
         ...state,
         isLoading: true,
-        Schedules: payload,
+        Schedules: payload.data,
       };
     case 'GET_USERDETAIL':
       return {
