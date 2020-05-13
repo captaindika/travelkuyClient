@@ -1,14 +1,43 @@
 import React, {Component} from 'react';
-import {View, ScrollView, TextInput} from 'react-native';
+import {View, ScrollView, TextInput, TouchableWithoutFeedback} from 'react-native';
 import {Container, Thumbnail, Text} from 'native-base';
 import Logo from 'react-native-vector-icons/MaterialIcons';
-
+import ImagePicker from 'react-native-image-picker';
+const options = {
+  title: 'Select Avatar',
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
 
 export default class Profile extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      avatarSource: ''
+    }
+    this.image = () => {
+      ImagePicker.launchImageLibrary(options, (response) => {
+        console.log('Response = ', response);
+       
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          const source = { uri: response.uri };
+       
+          // You can also display the image using data:
+          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+       
+          this.setState({
+            avatarSource: source,
+          });
+        }
+      });
     }
   }
   render() {
@@ -25,11 +54,13 @@ export default class Profile extends Component {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
+            <TouchableWithoutFeedback onPress={this.image}>
             <Thumbnail
               large
-              source={{uri: uri}}
+              source={this.state.avatarSource}
               style={{width: 150, height: 150, borderRadius: 150 / 3}}
             />
+            </TouchableWithoutFeedback>
             <Text
               style={{
                 fontWeight: 'bold',
