@@ -28,8 +28,7 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
     componentDidMount = async () => {
       try {
         await this.props.showSchedule(null, null, null);
-        await this.props.UserDetail()
-        console.log('DidMount: ', this.props.Detail.detail);
+        // console.log('DidMount: ',this.props.Schedule)
       } catch (err) {
         console.log(err);
       }
@@ -40,9 +39,20 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
       this.state = {
         caretStatus: false,
         idSchedule: 0,
+        search: '',
+        sort: 0,
       };
-      this.sort = () => {
-        this.setState({caretStatus: !this.state.caretStatus});
+      this.sort = (field) => {
+        const sort = this.state.sort
+          ? this.state.sort - 1
+          : this.state.sort + 1;
+        this.props.showSchedule(this.state.search, field, parseInt(sort));
+        this.setState({
+          caretStatus: !this.state.caretStatus,
+          sort: sort,
+        });
+        console.log(this.props);
+        console.log(this.state.search);
       };
 
       this.toastShow = () => {
@@ -64,6 +74,14 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
           {cancelable: false},
         );
       };
+
+      this.handleSearch = text => {
+        // this.props.showSchedule(e.target.value, null, this.state.sort)
+        this.setState({
+          search: text
+        })
+        this.props.showSchedule(text, null, this.state.sort)
+      }
     }
     render() {
       console.log(this.state);
@@ -168,6 +186,8 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
                 <Input
                   type="text"
                   placeholder="Find your Destination"
+                  value = {this.state.search}
+                  onChangeText={this.handleSearch}
                   style={{
                     backgroundColor: 'white',
                     borderRadius: 20,
@@ -181,7 +201,7 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
                 />
                 <TouchableOpacity
                   style={{marginLeft: 10, flex: 0.3}}
-                  onPress={this.sort}>
+                  onPress={()=>this.sort('schedules.price')}>
                   <Text style={{color: 'white', fontWeight: 'bold'}}>
                     Sort By Price
                   </Text>
