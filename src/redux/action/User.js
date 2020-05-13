@@ -6,7 +6,7 @@ import { Alert } from 'react-native'
 const getToken = async () => {
   try {
     const token = await AsyncStorage.getItem('token')
-    axios.defaults.headers.common['Authorization'] = `Bearer${token}`
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   } catch (err) {
     console.log(err)
   }
@@ -15,6 +15,7 @@ getToken()
 
 export const UserDetail = () => async dispatch => {
   const res = await axios.get(Config.APP_BACKEND.concat('user/detail'))
+  console.log('ini res', res)
   try {
     dispatch ({
       type: 'GET_USERDETAIL',
@@ -101,11 +102,12 @@ export const GetPayment = () => async dispatch => {
       })
     } else {
       Alert.alert('Dont have any payment')
-    } catch (err) {
+    }
+  } catch (err) {
       console.log(err)
     }
   }
-}
+
 
 export const GetPaymentById = (id) => async dispatch => {
   try {
@@ -129,6 +131,22 @@ export const UpdatePayment = (id) => async dispatch => {
     if (res) {
       dispatch({
         type: 'UPDATE_PAYMENT'
+      })
+    } else {
+      Alert.alert(res.data.msg)
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const getTransaction = (sort) => async dispatch => {
+  try {
+    const res = await axios.get(Config.APP_BACKEND.concat(`user/transaction?sort[key]=transactions.created_at&sort[value]=${sort}`))
+    if (res) {
+      dispatch({
+        type: 'USER_TRANSACTION',
+        payload: res.data
       })
     } else {
       Alert.alert(res.data.msg)

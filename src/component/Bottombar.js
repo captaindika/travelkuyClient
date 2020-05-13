@@ -4,7 +4,7 @@ import * as React from 'react';
 // screen
 import Home from '../screen/Home';
 import Profile from '../screen/Profile';
-import Transaction from '../screen/Transaction';
+import Top from '../component/Topbar';
 
 const Tab = createMaterialBottomTabNavigator();
 function BottomBar() {
@@ -34,7 +34,7 @@ function BottomBar() {
           ),
         }}
       />
-      <Tab.Screen name="Transaction" component={Transaction} options={{
+      <Tab.Screen name="Top" component={Top} options={{
           tabBarLabel: 'Transaction',
           tabBarIcon: ({color}) => (
             <Iconbot name="bank-transfer" color={color} size={26} />

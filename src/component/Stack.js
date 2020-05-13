@@ -11,6 +11,10 @@ import Login from '../screen/Login';
 import BottomBar from '../component/Bottombar';
 import Forget from '../screen/Forget';
 import Reset from '../screen/Reset';
+import Activation from '../screen/Activation';
+
+
+
 
 const Stack = createStackNavigator();
 
@@ -73,6 +77,8 @@ function StackScreen() {
         <Stack.Screen name="Bottombar" component={BottomBar} />
         <Stack.Screen name='Forget' component={Forget} />
         <Stack.Screen name='Reset' component={Reset} />
+        <Stack.Screen name='Activation' component={Activation} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

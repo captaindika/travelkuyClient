@@ -15,9 +15,10 @@ import {
 import {View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import Logo from 'react-native-vector-icons/MaterialIcons';
 import {setLogin} from '../redux/action/Auth';
+import {UserDetail} from '../redux/action/User';
 import {connect} from 'react-redux';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +28,24 @@ export default class Login extends Component {
       username: '',
       password: ''
     };
+    this.onLogin = (e) => {
+      const data = {
+        username: this.state.username,
+        password: this.state.password
+      }
+      this.props.setLogin(data).then(async () => {
+        if (this.props.data.data.success === true) {
+          try {
+            await this.props.UserDetail
+            this.props.navigation.navigate('Bottombar')
+          } catch (err) {
+            console.log(err)
+          }
+        } else {
+          this.props.navigation.push('Login')
+        }
+      })
+    }
 
     this.showPassword = () =>
       this.setState({
@@ -34,12 +53,9 @@ export default class Login extends Component {
         showPass: !this.state.showPass,
       });
     
-    this.tryAlert = () => {
-      Alert.alert('Login Success')
-      this.props.navigation.navigate('Bottombar')
-    }
   }
   render() {
+    console.log(this.props)
     return (
       <>
         <Container>
@@ -52,11 +68,11 @@ export default class Login extends Component {
             <Form style={{marginTop: 10}}>
               <Item stackedLabel>
                 <Label>Username</Label>
-                <Input />
+                <Input onChangeText={(text)=> this.setState({username: text})}/>
               </Item>
               <Item stackedLabel last>
                 <Label>Password</Label>
-                <Input secureTextEntry={this.state.showPass} />
+                <Input secureTextEntry={this.state.showPass} onChangeText={(text) => this.setState({password: text})}/>
               </Item>
               <ListItem onPress={this.showPassword}>
                 <CheckBox
@@ -71,7 +87,7 @@ export default class Login extends Component {
             <Button
               block
               info
-              onPress={this.tryAlert}>
+              onPress={this.onLogin}>
               <Text style={{fontWeight: 'bold', fontSize: 18}}>Login</Text>
             </Button>
             <Button block light onPress={() => this.props.navigation.goBack()}>
@@ -134,3 +150,11 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    data: state.isLogin
+  }
+}
+
+export default connect(mapStateToProps, { setLogin, UserDetail}) (Login)

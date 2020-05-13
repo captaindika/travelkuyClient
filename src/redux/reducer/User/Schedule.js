@@ -2,6 +2,7 @@ const initialState = {
   Schedules: [],
   isLoading: false,
   data: {},
+  transactionUser: [],
 };
 
 export default function Schedules(state = initialState, {type, payload}) {
@@ -17,6 +18,12 @@ export default function Schedules(state = initialState, {type, payload}) {
         ...state,
         isLoading: true,
         data: payload,
+      };
+    case 'USER_TRANSACTION':
+      return {
+        ...state,
+        isLoading: true,
+        transactionUser: payload,
       };
     default:
       return {...state};

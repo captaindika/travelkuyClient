@@ -2,8 +2,23 @@ import React, {Component} from 'react';
 import {ScrollView, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import {Header, Container, Input} from 'native-base';
 import Caret from 'react-native-vector-icons/AntDesign';
+import {connect} from 'react-redux';
+import {getTransaction} from '../redux/action/User'
 
-export default class Transaction extends Component {
+
+const mapStateToProps = (state) => ({
+  Transaction: state.Schedules.transactionUser
+})
+
+const mapDispatchToProps = {
+  getTransaction
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (class Transaction extends Component {
+  componentDidMount() {
+    this.props.getTransaction(0)
+    console.log('DidMount :', this.props.Transaction)
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -19,57 +34,63 @@ export default class Transaction extends Component {
     return (
       <>
         <Container>
-          <Header style={{backgroundColor: '#633a82', alignItems: 'center'}}>
-            <Text style={{fontWeight: 'bold', fontSize: 20, color: 'white'}}>
-              Transaction history
-            </Text>
-          </Header>
           <ScrollView style={{flex: 1, marginBottom: 10}}>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Login')}
-              style={{
-                marginTop: 10,
-                backgroundColor: '#f0e3ff',
-                height: 100,
-                borderRadius: 20,
-                display: 'flex',
-                flexDirection: 'row',
-              }}>
-              <View
-                style={{
-                  margin: 15,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flex: 1,
-                }}>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  Bandung - Jakarta
-                </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  Departure time: 09.00
-                </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  Seat Quota: 5
-                </Text>
-              </View>
-              <View
-                style={{
-                  margin: 15,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flex: 1,
-                }}>
-                <Text style={{fontWeight: 'bold', fontSize: 15, color: 'blue'}}>
-                  Rp.100.000
-                </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  Arrive time: 13.00
-                </Text>
-                <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                  03/05/2020
-                </Text>
-              </View>
-            </TouchableOpacity>
+          {this.props.Transaction.info &&
+                this.props.Transaction.info.map((v, i) => {
+                  return (
+                    <TouchableOpacity
+                      onPress={this.alertBuy}
+                      style={{
+                        marginTop: 10,
+                        backgroundColor: '#f0e3ff',
+                        height: 100,
+                        borderRadius: 20,
+                        display: 'flex',
+                        flexDirection: 'row',
+                      }}>
+                      <View
+                        style={{
+                          margin: 15,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          flex: 1,
+                        }}>
+                        <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                          {v.start} - {v.end}
+                        </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                          Departure time: {v.departure_time.slice(0, 5)}
+                        </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                          Bus Name: {v.car_name}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          margin: 15,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          flex: 1,
+                        }}>
+                        <Text
+                          style={{
+                            fontWeight: 'bold',
+                            fontSize: 15,
+                            color: 'blue',
+                          }}>
+                          {/* Rp. {const Intl = require('react-native-intl');new Intl.NumberFormat(['ban', 'id']).format(v.price)} */}
+                          Rp. {v.price}
+                        </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                          Arrive time: {v.arrive_time.slice(0, 5)}
+                        </Text>
+                        <Text style={{fontWeight: 'bold', fontSize: 15}}>
+                          {v.departure_date.slice(0, 10)}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
           </ScrollView>
           <View
             style={{
@@ -111,3 +132,4 @@ export default class Transaction extends Component {
     );
   }
 }
+)

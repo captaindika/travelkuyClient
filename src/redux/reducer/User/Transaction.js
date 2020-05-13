@@ -5,6 +5,7 @@ const initialState = {
   orderId: [],
   idPayment: 0,
   isLoading: false,
+  
 };
 
 export default function TopUp(state = initialState, {type, payload}) {

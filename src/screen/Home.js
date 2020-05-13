@@ -12,19 +12,24 @@ import Logout from 'react-native-vector-icons/MaterialCommunityIcons';
 import Caret from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
 import {showSchedule} from '../redux/action/Schedule';
+import {UserDetail} from '../redux/action/User';
+
 
 const mapStateToProps = (state) => {
   return {
     Schedule: state.Schedules.Schedules,
+    Detail: state.Schedules.data,
+    Transaction: state.Schedules.transactionUser
   };
 };
 
-export default connect(mapStateToProps, {showSchedule})(
+export default connect(mapStateToProps, {showSchedule, UserDetail})(
   class Home extends Component {
     componentDidMount = async () => {
       try {
         await this.props.showSchedule(null, null, null);
-        console.log('DidMount: ', this.props.Schedule);
+        await this.props.UserDetail()
+        console.log('DidMount: ', this.props.Detail.detail);
       } catch (err) {
         console.log(err);
       }
@@ -78,7 +83,7 @@ export default connect(mapStateToProps, {showSchedule})(
                   fontSize: 25,
                   marginLeft: 20,
                 }}>
-                Find your adventure !
+                Balance : {this.props.Detail.detail && this.props.Detail.detail.balance}
               </Text>
               <TouchableOpacity
                 style={{

@@ -72,7 +72,7 @@ export default class Register extends Component {
             <Button
               block
               info
-              onPress={() => this.props.navigation.navigate('Login')}>
+              onPress={() => this.props.navigation.navigate('Activation')}>
               <Text style={{fontWeight: 'bold', fontSize: 18}}>Register</Text>
             </Button>
             <Button
