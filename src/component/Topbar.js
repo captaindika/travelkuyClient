@@ -11,7 +11,7 @@ function Top() {
     <Tab.Navigator
       initialRouteName="Transaction"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#b491c8',
         labelStyle: { 
           fontSize: 18,
           fontWeight:'bold',
@@ -25,7 +25,7 @@ function Top() {
         options={{ tabBarLabel: 'History' }}
       />
       <Tab.Screen
-        name="Top Up"
+        name="Topup"
         component={Topup}
         options={{ tabBarLabel: 'Top Up' }}
       />
