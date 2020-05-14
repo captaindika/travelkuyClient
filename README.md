@@ -1,4 +1,4 @@
-<h1 align='center'> Iog Travel <br>Bus Reservations Apps</h1>
+<h1 align='center'> Travelkuy Native <br>Bus Reservations Apps</h1>
 
 <br>
 <br>
@@ -7,7 +7,7 @@
 
 [![React Native](https://img.shields.io/badge/react%20native-v0.60.5-blue)](https://facebook.github.io/react-native/)
 
-<p align='justify'>Iog Travel is a Bus Ticket Reservations platform. The reservation transactions are mainly designed in the mobile version while the reservation and others data management runs in web platform. This app was build with React native and React js
+<p align='justify'>Travelkuy Native is a Bus Ticket Reservations platform. The reservation transactions are mainly designed in the mobile version while the reservation and others data management runs in web platform. This app was build with React native and React js
 
 </p>
 
@@ -38,9 +38,9 @@ You can Download the APK [`here`](https://drive.google.com/file/d/1-fKxA6y4EqH1Z
 ## Screenshot from the App
 
 <p align='center'>
-    <img width="1400" src='https://user-images.githubusercontent.com/56215780/81821744-6d35e580-955c-11ea-9c06-7bacb7d80cbf.png' />
+    <img width="1400" src='https://user-images.githubusercontent.com/12905622/81903416-efb9b600-95eb-11ea-92b7-a1e63cf2ca73.png' />
 </p>
 
 ## License
 
-© [Audy Wisuda Pratama](https://github.com/audywp/ ' audywp ')
+© [Dika Frandita](https://github.com/captaindika/travelkuyClient ' captaindika ')
