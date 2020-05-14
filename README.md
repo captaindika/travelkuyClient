@@ -20,7 +20,7 @@
 
 ## Installation
 
-1. Download this Project or you can type `git clone https://github.com/audywp/iog-native.git`
+1. Download this Project or you can type `git clone https://github.com/captaindika/travelkuyClient.git`
 2. Open app's directory in CMD or Terminal
 3. Type `yarn install`
 4. Type ` react-native run-android
