@@ -24,10 +24,19 @@ export default connect(mapStateToProps, mapDispatchToProps) (class Transaction e
     this.state = {
       caretStatus: false,
       text: 'teks',
+      sort: 0,
     };
     this.sort = () => {
-      this.setState({caretStatus: !this.state.caretStatus});
+      const sort = this.state.sort
+        ? this.state.sort - 1
+        : this.state.sort + 1;
+      this.props.getTransaction(parseInt(sort));
+      this.setState({
+        caretStatus: !this.state.caretStatus,
+        sort: sort,
+      });
     };
+
   }
   render() {
     console.log(this.state)
@@ -85,7 +94,7 @@ export default connect(mapStateToProps, mapDispatchToProps) (class Transaction e
                           Arrive time: {v.arrive_time.slice(0, 5)}
                         </Text>
                         <Text style={{fontWeight: 'bold', fontSize: 15}}>
-                          {v.departure_date.slice(0, 10)}
+                          {new Date(v.departure_date).toUTCString()}
                         </Text>
                       </View>
                     </TouchableOpacity>

@@ -38,6 +38,18 @@ export const TopUp = (data) => async dispatch => {
   }
 }
 
+export const createTransaction = (data) => async dispatch => {
+  const res = await axios.post(Config.APP_BACKEND.concat('user/transaction/add'), data)
+  try {
+    dispatch ({
+      type: 'ADD_TRANS',
+      payload: res.data
+    })
+  } catch(err) {
+    Alert.alert(errr)
+  }
+}
+
 export const Indomaret = (data) => async dispatch => {
   try {
     const res = await axios.post('https://api.sandbox.midtrans.com/v2/charge', JSON.stringify(data) ,{
@@ -142,7 +154,7 @@ export const UpdatePayment = (id) => async dispatch => {
 
 export const getTransaction = (sort) => async dispatch => {
   try {
-    const res = await axios.get(Config.APP_BACKEND.concat(`user/transaction?sort[key]=transactions.created_at&sort[value]=${sort}`))
+    const res = await axios.get(Config.APP_BACKEND.concat(`user/transaction?sort[key]=transactions.created_at&sort[value]=${sort}&limit=100000`))
     if (res) {
       dispatch({
         type: 'USER_TRANSACTION',

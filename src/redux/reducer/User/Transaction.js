@@ -50,6 +50,11 @@ export default function TopUp(state = initialState, {type, payload}) {
         ...state,
         isLoading: true,
       };
+    case 'ADD_TRANS':
+      return {
+        ...state,
+        isLoading: true,
+      }
     default:
       return {...state};
   }

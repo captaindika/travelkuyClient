@@ -12,7 +12,7 @@ import Logout from 'react-native-vector-icons/MaterialCommunityIcons';
 import Caret from 'react-native-vector-icons/AntDesign';
 import {connect} from 'react-redux';
 import {showSchedule} from '../redux/action/Schedule';
-import {UserDetail} from '../redux/action/User';
+import {UserDetail, createTransaction} from '../redux/action/User';
 
 
 const mapStateToProps = (state) => {
@@ -23,11 +23,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {showSchedule, UserDetail})(
+export default connect(mapStateToProps, {showSchedule, UserDetail, createTransaction})(
   class Home extends Component {
     componentDidMount = async () => {
       try {
         await this.props.showSchedule(null, null, null);
+        await this.props.UserDetail()
+        this.setState({
+          balance: this.props.Detail.detail.balance
+        })
         // console.log('DidMount: ',this.props.Schedule)
       } catch (err) {
         console.log(err);
@@ -41,7 +45,17 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
         idSchedule: 0,
         search: '',
         sort: 0,
+        idSchedule: 0,
+        balance: 0,
+        schedulePrice: 0,
       };
+      this.bookSchedule = (id, price) => {
+        this.setState({
+          idSchedule: id,
+          schedulePrice: price
+        })
+        this.alertBuy()
+      }
       this.sort = (field) => {
         const sort = this.state.sort
           ? this.state.sort - 1
@@ -52,11 +66,29 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
           sort: sort,
         });
         console.log(this.props);
-        console.log(this.state.search);
+        console.log('idSchedule :',this.state.idSchedule);
       };
 
-      this.toastShow = () => {
-        ToastAndroid.show('Schedule booked successfully !', ToastAndroid.SHORT);
+      this.toastShow = async () => {
+        if ((this.state.balance - this.state.schedulePrice) < 0) {
+          Alert.alert('Please top up your balance')
+          this.props.navigation.navigate
+          ('Bottombar',
+            { screen: 'Top',
+              params: {
+                screen: 'Topup',
+              }
+            }
+          )
+        } else {
+          const data = {
+            idSchedule: this.state.idSchedule
+          }
+          this.props.createTransaction(data)
+          await this.props.showSchedule(null, null, null)
+          ToastAndroid.show('Schedule booked successfully !', ToastAndroid.SHORT);
+          this.props.navigation.push('Bottombar')
+        }
       };
 
       this.alertBuy = () => {
@@ -84,7 +116,7 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
       }
     }
     render() {
-      console.log(this.state);
+      console.log('State :', this.state);
       return (
         <>
           <Container>
@@ -123,7 +155,7 @@ export default connect(mapStateToProps, {showSchedule, UserDetail})(
                 this.props.Schedule.data.map((v, i) => {
                   return (
                     <TouchableOpacity
-                      onPress={this.alertBuy}
+                      onPress={()=>this.bookSchedule(v.id, v.price)}
                       style={{
                         marginTop: 10,
                         backgroundColor: '#f0e3ff',
